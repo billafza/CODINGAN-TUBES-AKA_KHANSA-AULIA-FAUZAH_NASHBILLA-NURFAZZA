@@ -1,0 +1,52 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Variabel global untuk menghitung jumlah operasi
+int operasiRekursif = 0;
+int operasiIteratif = 0;
+
+// Fungsi rekursif untuk menghitung total waktu
+int hitungWaktuRekursif(const vector<int>& lapisan, int index) {
+    operasiRekursif++; // Hitung operasi dasar
+    if (index == lapisan.size()) {
+        return 0; // Basis: tidak ada lapisan tersisa
+    }
+    return lapisan[index] + hitungWaktuRekursif(lapisan, index + 1);
+}
+
+// Fungsi iteratif untuk menghitung total waktu
+int hitungWaktuIteratif(const vector<int>& lapisan) {
+    int totalWaktu = 0;
+    for (int waktu : lapisan) {
+        operasiIteratif++; // Hitung operasi dasar
+        totalWaktu += waktu;
+    }
+    return totalWaktu;
+}
+
+int main() {
+    // Contoh input: ketebalan lapisan dalam satuan waktu (detik)
+    vector<int> lapisan = {5}; // Ketebalan setiap lapisan
+
+    // Hitung waktu menggunakan pendekatan iteratif
+    int totalIteratif = hitungWaktuIteratif(lapisan);
+    cout << "Total waktu (iteratif): " << totalIteratif << " detik" << endl;
+
+    // Hitung waktu menggunakan pendekatan rekursif
+    int totalRekursif = hitungWaktuRekursif(lapisan, 0);
+    cout << "Total waktu (rekursif): " << totalRekursif << " detik" << endl;
+
+    // Tampilkan jumlah operasi dasar
+    cout << "Jumlah operasi dasar (iteratif): " << operasiIteratif << endl;
+    cout << "Jumlah operasi dasar (rekursif): " << operasiRekursif << endl;
+
+    // Analisis Kompleksitas
+    int n = lapisan.size();
+    cout << "\nAnalisis Kompleksitas:" << endl;
+    cout << "Iteratif: big-o(n) dan big teta(n), karena loop berjalan sebanyak n kali." << endl;
+    cout << "Rekursif: big-o(n) dan big teta(n), karena ada n panggilan rekursif." << endl;
+
+    return 0;
+}
